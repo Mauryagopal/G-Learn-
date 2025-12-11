@@ -44,11 +44,17 @@ def create_structure(base_path, struct):
 # ------------------------------
 # 3. GENERATE TREE FOR README
 # ------------------------------
+IGNORE_FOLDERS = {"venv", "__pycache__", ".git", ".idea"}
+IGNORE_FILES = {"setup_glearn.py", ".gitignore"}
+
 def generate_tree(path, prefix=""):
     tree_str = ""
     items = sorted(os.listdir(path))
 
     for i, item in enumerate(items):
+        if item in IGNORE_FOLDERS or item in IGNORE_FILES:
+            continue
+
         full_path = os.path.join(path, item)
         connector = "└── " if i == len(items) - 1 else "├── "
         tree_str += prefix + connector + item + "\n"
